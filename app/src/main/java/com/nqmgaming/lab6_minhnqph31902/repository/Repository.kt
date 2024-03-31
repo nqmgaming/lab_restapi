@@ -3,11 +3,25 @@ package com.nqmgaming.lab6_minhnqph31902.repository
 import com.nqmgaming.lab6_minhnqph31902.api.ApiServiceBuilder
 import com.nqmgaming.lab6_minhnqph31902.model.Distributor
 import com.nqmgaming.lab6_minhnqph31902.model.User
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
+import java.io.File
 
 class Repository {
     suspend fun login(username: String, password: String) : Response<User> {
         return ApiServiceBuilder.api.login(username, password)
+    }
+
+    suspend fun register(username: String, password: String, email: String, name: String, available: Boolean, avatarFile: File): Response<User> {
+        val usernameRequestBody = RequestBody.create(MediaType.parse("text/plain"), username)
+        val passwordRequestBody = RequestBody.create(MediaType.parse("text/plain"), password)
+        val emailRequestBody = RequestBody.create(MediaType.parse("text/plain"), email)
+        val nameRequestBody = RequestBody.create(MediaType.parse("text/plain"), name)
+        val availableRequestBody = RequestBody.create(MediaType.parse("text/plain"), available.toString())
+        val avatarPart = MultipartBody.Part.createFormData("avatar", avatarFile.name, RequestBody.create(MediaType.parse("image/*"), avatarFile))
+        return ApiServiceBuilder.api.register(usernameRequestBody, passwordRequestBody, emailRequestBody, nameRequestBody, availableRequestBody, avatarPart)
     }
 
     suspend fun getDistributors(token: String): Response<List<Distributor>> {
@@ -29,4 +43,5 @@ class Repository {
     suspend fun updateDistributor(token: String, distributorId: String, name: String): Response<Distributor> {
         return ApiServiceBuilder.api.updateDistributor(token, distributorId, name)
     }
+
 }

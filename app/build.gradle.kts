@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -69,5 +70,10 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
     implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
 
+    // Glide
+    implementation("com.github.bumptech.glide:glide:4.12.0")
 
+    // Easy Permissions
+    implementation("pub.devrel:easypermissions:3.0.0")
+    implementation("pub.devrel:easypermissions:2.0.1")
 }
