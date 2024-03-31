@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/distributorFragment">
+
+    <fragment
+        android:id="@+id/distributorFragment"
+        android:name="com.nqmgaming.lab6_minhnqph31902.ui.fragment.distributor.DistributorFragment"
+        android:label="Distributor"
+        tools:layout="@layout/fragment_distributor" />
+</navigation>

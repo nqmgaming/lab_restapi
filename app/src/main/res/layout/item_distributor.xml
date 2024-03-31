@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="15dp"
+    android:elevation="5dp"
+    android:layout_margin="5dp"
+    android:layout_height="wrap_content">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="id"
+    android:id="@+id/id_tv"
+    android:layout_margin="5dp"
+    android:textSize="20sp"
+    android:textStyle="bold"
+    android:textColor="#000000" />
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="name"
+    android:id="@+id/name_tv"
+    android:layout_margin="5dp"
+    android:textSize="20sp"
+    android:textStyle="bold"
+    android:layout_weight="1"
+    android:textColor="#000000" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/delete_forever"
+        android:id="@+id/delete_btn"
+        android:layout_margin="5dp"
+        android:tint="#FF00FF"
+        android:background="@color/white"
+        android:padding="5dp"
+        android:layout_gravity="center"
+        android:contentDescription="delete" />
+
+</LinearLayout>
+</androidx.cardview.widget.CardView>

@@ -10,5 +10,6 @@ data class User (
     val email: String,
     val name: String,
     val avatar: String,
-    val available: Boolean
+    val available: Boolean,
+    val token: String
 )
