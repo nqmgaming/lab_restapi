@@ -76,4 +76,10 @@ dependencies {
     // Easy Permissions
     implementation("pub.devrel:easypermissions:3.0.0")
     implementation("pub.devrel:easypermissions:2.0.1")
+
+    // Progress Dialog
+//    implementation("com.github.tommasoberlose:progress-dialog:1.0.0")
+
+    // Avatar Image View
+    implementation("xyz.schwaab:avvylib:1.2.0")
 }

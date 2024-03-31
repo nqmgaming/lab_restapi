@@ -1,12 +1,14 @@
 package com.nqmgaming.lab6_minhnqph31902.ui.activity
 
 import android.Manifest
+import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -47,7 +49,9 @@ class RegisterActivity : AppCompatActivity(), EasyPermissions.PermissionCallback
     }
 
     private val takePicture = registerForActivityResult(ActivityResultContracts.TakePicturePreview()) { bitmap: Bitmap? ->
-        binding.imageView.setImageBitmap(bitmap)
+        if (bitmap != null) {
+            binding.imageView.setImageBitmap(bitmap)
+        }
         imageUri = bitmap?.let { saveBitmapToFile(it) }
         imageSource = ImageSource.CAMERA
     }
@@ -62,6 +66,10 @@ class RegisterActivity : AppCompatActivity(), EasyPermissions.PermissionCallback
         }
         binding.registerBtn.setOnClickListener {
             checkPermissionAndRegisterUser()
+        }
+        binding.loginBtn.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -120,6 +128,7 @@ class RegisterActivity : AppCompatActivity(), EasyPermissions.PermissionCallback
             Toast.makeText(this, "Please select an image", Toast.LENGTH_SHORT).show()
             return
         }
+        binding.progressBar.visibility = ProgressBar.VISIBLE
 
         val avatarFile = when (imageSource) {
             ImageSource.CAMERA -> File(imageUri!!.path!!)
@@ -145,6 +154,11 @@ class RegisterActivity : AppCompatActivity(), EasyPermissions.PermissionCallback
                     if (response.isSuccessful) "Registered successfully" else "Registration failed",
                     Toast.LENGTH_SHORT
                 ).show()
+               binding.progressBar.visibility = ProgressBar.GONE
+                //intent to login activity
+                val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+                startActivity(intent)
+
             }
         }
     }
