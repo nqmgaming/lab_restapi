@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("com.google.devtools.ksp")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -91,4 +92,7 @@ dependencies {
 
     // PickiT
     implementation ("com.github.HBiSoft:PickiT:2.0.5")
+
+    // Spinner
+    implementation ("com.github.chivorns:smartmaterialspinner:2.0.0")
 }

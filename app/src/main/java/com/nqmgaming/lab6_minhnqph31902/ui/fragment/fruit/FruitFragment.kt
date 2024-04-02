@@ -1,60 +1,122 @@
 package com.nqmgaming.lab6_minhnqph31902.ui.fragment.fruit
 
+import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.nqmgaming.lab6_minhnqph31902.R
+import com.nqmgaming.lab6_minhnqph31902.adapter.FruitAdapter
+import com.nqmgaming.lab6_minhnqph31902.databinding.FragmentFruitBinding
+import com.nqmgaming.lab6_minhnqph31902.model.Fruit
+import com.nqmgaming.lab6_minhnqph31902.repository.Repository
+import com.nqmgaming.lab6_minhnqph31902.utils.SharedPrefUtils
+import com.nqmgaming.lab6_minhnqph31902.viewmodel.FruitViewModel
+import com.nqmgaming.lab6_minhnqph31902.viewmodel.FruitViewModelFactory
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [FruitFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class FruitFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
+    private var _binding: FragmentFruitBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var viewModel: FruitViewModel
+    private val adapter = FruitAdapter(
+        onDelete = { fruit -> deleteFruit(fruit.id) },
+        onUpdate = { fruit -> showDialogToUpdateFruit(fruit) }
+    )
+    private var originalFruitList = emptyList<Fruit>()
+    private var token: String? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fruit, container, false)
+        _binding = FragmentFruitBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FruitFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FruitFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.fab.setOnClickListener{
+            findNavController().navigate((R.id.action_fruitFragment_to_addFruitFragment))
+        }
+
+        val repository = Repository()
+        val viewModelFactory = FruitViewModelFactory(repository)
+        viewModel = ViewModelProvider(this, viewModelFactory)[FruitViewModel::class.java]
+
+        setupRecyclerView()
+
+        token = SharedPrefUtils.getString(requireContext(), "token")
+
+
+        token?.let {
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    val response = viewModel.getFruits("Bearer $it")
+                    withContext(Dispatchers.Main) {
+                        if (response.isSuccessful) {
+                            response.body()?.let { fruits ->
+                                originalFruitList = fruits
+                                adapter.setFruitList(fruits)
+                            }
+                        } else {
+                            Log.d("FruitFragment", "onViewCreated: ${response.message()}")
+                        }
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
             }
+        }
     }
+
+    private fun setupRecyclerView() {
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    private fun showDialogToUpdateFruit(fruit: Fruit) {
+
+    }
+
+    private fun deleteFruit(fruitId: String) {
+        Toast.makeText(requireContext(), "Delete fruit $fruitId", Toast.LENGTH_SHORT).show()
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Delete Fruit")
+        builder.setMessage("Are you sure you want to delete this fruit?")
+        builder.setPositiveButton("Yes") { dialog, which ->
+            token?.let {
+                CoroutineScope(Dispatchers.IO).launch {
+                    try {
+                        val response = viewModel.deleteFruit("Bearer $it", fruitId)
+                        withContext(Dispatchers.Main) {
+                            if (response.isSuccessful) {
+                                val updatedFruitList = originalFruitList.toMutableList()
+                                updatedFruitList.removeIf { it.id.toString() == fruitId }
+                                adapter.setFruitList(updatedFruitList)
+                            } else {
+                                Log.d("FruitFragment", "deleteFruit: ${response.message()}")
+                            }
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+        }
+
+        builder.setNegativeButton("No") { dialog, which -> }
+        builder.create().show()
+    }
+
 }

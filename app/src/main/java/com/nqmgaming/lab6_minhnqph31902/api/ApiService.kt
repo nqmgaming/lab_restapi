@@ -1,6 +1,7 @@
 package com.nqmgaming.lab6_minhnqph31902.api
 
 import com.nqmgaming.lab6_minhnqph31902.model.Distributor
+import com.nqmgaming.lab6_minhnqph31902.model.Fruit
 import com.nqmgaming.lab6_minhnqph31902.model.User
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -43,11 +44,18 @@ interface ApiService {
     // Get all distributors use bearer token
     @GET("distributors")
     suspend fun getDistributors(@Header("Authorization") token: String): Response<List<Distributor>>
+
     @DELETE("distributors/{distributorId}")
-    suspend fun deleteDistributor(@Header("Authorization") token: String, @Path("distributorId") distributorId: String): Response<Distributor>
+    suspend fun deleteDistributor(
+        @Header("Authorization") token: String,
+        @Path("distributorId") distributorId: String
+    ): Response<Distributor>
 
     @GET("distributors/search")
-    suspend fun searchDistributor(@Header("Authorization") token: String, @Query("name") name: String): Response<List<Distributor>>
+    suspend fun searchDistributor(
+        @Header("Authorization") token: String,
+        @Query("name") name: String
+    ): Response<List<Distributor>>
 
     @POST("distributors/create")
     @FormUrlEncoded
@@ -63,4 +71,27 @@ interface ApiService {
         @Path("distributorId") distributorId: String,
         @Field("name") name: String,
     ): Response<Distributor>
+
+    //get list of fruits
+    @GET("fruits")
+    suspend fun getFruits(@Header("Authorization") token: String): Response<List<Fruit>>
+
+    @DELETE("fruits/{fruitId}")
+    suspend fun deleteFruit(
+        @Header("Authorization") token: String,
+        @Path("fruitId") fruitId: String
+    ): Response<Fruit>
+
+    @Multipart
+    @POST("fruits/create")
+    suspend fun createFruit(
+        @Header("Authorization") token: String,
+        @Part("name") name: RequestBody,
+        @Part("quantity") quantity: RequestBody,
+        @Part("price") price: RequestBody,
+        @Part("status") status: RequestBody,
+        @Part("description") description: RequestBody,
+        @Part("distributor") distributor: RequestBody,
+        @Part images: List<MultipartBody.Part>
+    ): Response<Fruit>
 }

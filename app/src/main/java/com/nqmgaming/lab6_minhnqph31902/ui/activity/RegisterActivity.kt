@@ -100,6 +100,7 @@ class RegisterActivity : AppCompatActivity() {
 
         val realPath = RealPathUtil.getRealPath(this, imageUri!!)
         val avatarFile = realPath?.let { File(it) }
+        Log.d("RegisterActivity", "Real path: $realPath, Image uri: $imageUri, Avatar file: $avatarFile")
         Log.d("RegisterActivity", "Avatar file: $avatarFile")
         val repository = Repository()
         val viewModelFactory = RegisterViewModelFactory(repository)

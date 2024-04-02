@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_fruitFragment_to_distributorFragment"
             app:destination="@id/distributorFragment" />
+        <action
+            android:id="@+id/action_fruitFragment_to_addFruitFragment"
+            app:destination="@id/addFruitFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -36,6 +39,15 @@
             app:destination="@id/distributorFragment" />
         <action
             android:id="@+id/action_profileFragment_to_fruitFragment"
+            app:destination="@id/fruitFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addFruitFragment"
+        android:name="com.nqmgaming.lab6_minhnqph31902.ui.fragment.fruit.AddFruitFragment"
+        android:label="fragment_add_fruit"
+        tools:layout="@layout/fragment_add_fruit" >
+        <action
+            android:id="@+id/action_addFruitFragment_to_fruitFragment"
             app:destination="@id/fruitFragment" />
     </fragment>
 </navigation>
