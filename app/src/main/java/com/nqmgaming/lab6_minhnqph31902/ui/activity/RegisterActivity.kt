@@ -1,127 +1,95 @@
 package com.nqmgaming.lab6_minhnqph31902.ui.activity
 
-import android.Manifest
+import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.nqmgaming.lab6_minhnqph31902.R
+import com.bumptech.glide.Glide
+import com.github.dhaval2404.imagepicker.ImagePicker
+import com.gun0912.tedpermission.coroutine.TedPermission
+import com.nqmgaming.lab6_minhnqph31902.MainActivity
 import com.nqmgaming.lab6_minhnqph31902.databinding.ActivityRegisterBinding
 import com.nqmgaming.lab6_minhnqph31902.repository.Repository
+import com.nqmgaming.lab6_minhnqph31902.utils.ImageUtils
+import com.nqmgaming.lab6_minhnqph31902.utils.RealPathUtil
+import com.nqmgaming.lab6_minhnqph31902.utils.SharedPrefUtils
 import com.nqmgaming.lab6_minhnqph31902.viewmodel.RegisterViewModel
 import com.nqmgaming.lab6_minhnqph31902.viewmodel.RegisterViewModelFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import pub.devrel.easypermissions.AppSettingsDialog
-import pub.devrel.easypermissions.EasyPermissions
 import java.io.File
-import java.io.FileOutputStream
 
-class RegisterActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
+class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
     private var imageUri: Uri? = null
     private lateinit var viewModel: RegisterViewModel
-    companion object {
-        private const val REQUEST_CODE_CAMERA = 1001
-        private const val REQUEST_CODE_READ_MEDIA_IMAGES = 1002
-    }
-    private var imageSource: ImageSource = ImageSource.GALLERY
-    enum class ImageSource {
-        CAMERA,
-        GALLERY
-    }
 
-    private val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-        imageUri = uri
-        binding.imageView.setImageURI(uri)
-        imageSource = ImageSource.GALLERY
-    }
-
-    private val takePicture = registerForActivityResult(ActivityResultContracts.TakePicturePreview()) { bitmap: Bitmap? ->
-        if (bitmap != null) {
-            binding.imageView.setImageBitmap(bitmap)
-        }
-        imageUri = bitmap?.let { saveBitmapToFile(it) }
-        imageSource = ImageSource.CAMERA
-    }
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        if (SharedPrefUtils.getBoolean(this, "isLoggedIn")) {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
         binding.imageView.setOnClickListener {
-            checkPermissionAndOpenCameraOrGallery()
+            GlobalScope.launch {
+                checkPermissionAndOpenCameraOrGallery()
+            }
         }
         binding.registerBtn.setOnClickListener {
-            checkPermissionAndRegisterUser()
+            registerUser()
         }
         binding.loginBtn.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
+
     }
 
-    private fun checkPermissionAndOpenCameraOrGallery() {
-        val perms = arrayOf(Manifest.permission.CAMERA)
-        if (EasyPermissions.hasPermissions(this, *perms)) {
-            openCameraOrGallery()
-        } else {
-            EasyPermissions.requestPermissions(this, getString(R.string.camera_rationale), REQUEST_CODE_CAMERA, *perms)
-        }
-    }
+    private suspend fun checkPermissionAndOpenCameraOrGallery() {
+        val permissionsResult = TedPermission.create()
+            .setPermissions(
+                android.Manifest.permission.CAMERA,
+                android.Manifest.permission.READ_MEDIA_IMAGES
+            )
+            .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
+            .check()
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    private fun checkPermissionAndRegisterUser() {
-        val perms = arrayOf(Manifest.permission.READ_MEDIA_IMAGES)
-        if (EasyPermissions.hasPermissions(this, *perms)) {
-            registerUser()
+        if (permissionsResult.isGranted) {
+            withContext(Dispatchers.Main) {
+                openCameraOrGallery()
+            }
         } else {
-            EasyPermissions.requestPermissions(this, getString(R.string.storage_rationale), REQUEST_CODE_READ_MEDIA_IMAGES, *perms)
+            Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
         }
+
     }
 
     private fun openCameraOrGallery() {
-        val items = arrayOf("Camera", "Gallery")
-        val builder = androidx.appcompat.app.AlertDialog.Builder(this)
-        builder.setTitle("Choose an action")
-        builder.setItems(items) { _, which ->
-            when (which) {
-                0 -> openCamera()
-                1 -> openGallery()
+        ImagePicker.with(this)
+            .crop()
+            .cropSquare()
+            .galleryMimeTypes(arrayOf("image/png", "image/jpeg"))
+            .compress(1024)
+            .maxResultSize(1080, 1080)
+            .createIntent { intent ->
+                getResult.launch(intent)
+
             }
-        }
-        val dialog = builder.create()
-        dialog.show()
     }
 
-    private fun openGallery() {
-        getContent.launch("image/*")
-    }
-
-    private fun openCamera() {
-        takePicture.launch(null)
-    }
-
-
-    private fun saveBitmapToFile(bitmap: Bitmap): Uri {
-        val file = File(externalCacheDir, "${System.currentTimeMillis()}.jpg")
-        val fos = FileOutputStream(file)
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos)
-        fos.close()
-        return Uri.fromFile(file)
-    }
 
     private fun registerUser() {
         if (imageUri == null) {
@@ -130,66 +98,73 @@ class RegisterActivity : AppCompatActivity(), EasyPermissions.PermissionCallback
         }
         binding.progressBar.visibility = ProgressBar.VISIBLE
 
-        val avatarFile = when (imageSource) {
-            ImageSource.CAMERA -> File(imageUri!!.path!!)
-            ImageSource.GALLERY -> uriToFile(imageUri!!)
-        }
+        val realPath = RealPathUtil.getRealPath(this, imageUri!!)
+        val avatarFile = realPath?.let { File(it) }
         Log.d("RegisterActivity", "Avatar file: $avatarFile")
         val repository = Repository()
         val viewModelFactory = RegisterViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory)[RegisterViewModel::class.java]
 
         CoroutineScope(Dispatchers.IO).launch {
-            val response = viewModel.register(
-                binding.usernameEt.text.toString().trim(),
-                binding.passwordEt.text.toString().trim(),
-                binding.emailEt.text.toString().trim(),
-                binding.nameEt.text.toString().trim(),
-                true,
-                avatarFile
-            )
+            val response = avatarFile?.let {
+                viewModel.register(
+                    binding.usernameEt.text.toString().trim(),
+                    binding.passwordEt.text.toString().trim(),
+                    binding.emailEt.text.toString().trim(),
+                    binding.nameEt.text.toString().trim(),
+                    true,
+                    it
+                )
+            }
             withContext(Dispatchers.Main) {
-                Toast.makeText(
-                    this@RegisterActivity,
-                    if (response.isSuccessful) "Registered successfully" else "Registration failed",
-                    Toast.LENGTH_SHORT
-                ).show()
-               binding.progressBar.visibility = ProgressBar.GONE
-                //intent to login activity
-                val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
-                startActivity(intent)
+                if (response != null) {
+                    if (response.isSuccessful) {
+                        Toast.makeText(
+                            this@RegisterActivity,
+                            "Register success",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        binding.progressBar.visibility = ProgressBar.GONE
+                        Intent(this@RegisterActivity, LoginActivity::class.java).also {
+                            startActivity(it)
+                            finish()
+                        }
+                    } else {
+                        if (response.code() == 409) {
+                            Toast.makeText(
+                                this@RegisterActivity,
+                                "Username or email already exists",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            Toast.makeText(
+                                this@RegisterActivity,
+                                "Register failed",
+                                Toast.LENGTH_SHORT
+                            ).show()
+
+                        }
+                    }
+                }
+
 
             }
         }
     }
 
-    private fun uriToFile(uri: Uri): File {
-        val cursor = contentResolver.query(uri, null, null, null, null)
-        cursor?.use {
-            it.moveToFirst()
-            val index = it.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
-            val path = it.getString(index)
-            return File(path)
+    private val getResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                Toast.makeText(this, "Image selected", Toast.LENGTH_SHORT).show()
+                val uri = result.data?.data
+                if (uri != null) {
+                    imageUri = uri
+                    Log.d("RegisterActivity", "Image uri: $uri")
+                    Glide.with(this).load(uri).into(binding.imageView)
+                } else {
+                    Toast.makeText(this, "Image not found", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
-        throw IllegalArgumentException("Uri not found")
-    }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
-    }
-
-
-    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
-        when (requestCode) {
-            REQUEST_CODE_CAMERA -> openCameraOrGallery()
-            REQUEST_CODE_READ_MEDIA_IMAGES -> registerUser()
-        }
-    }
-
-    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
-        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-            AppSettingsDialog.Builder(this).build().show()
-        }
-    }
 }

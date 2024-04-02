@@ -34,6 +34,14 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(R.id.distributorFragment)
                     true
                 }
+                R.id.fruitFragment -> {
+                    navController.navigate(R.id.fruitFragment)
+                    true
+                }
+                R.id.profileFragment -> {
+                    navController.navigate(R.id.profileFragment)
+                    true
+                }
 
                 else -> false
             }

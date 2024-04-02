@@ -9,7 +9,13 @@ data class User (
     val password: String,
     val email: String,
     val name: String,
-    val avatar: String,
+    val avatar:Avatar,
     val available: Boolean,
     val token: String
+)
+
+data class Avatar(
+    @SerializedName("public_id")
+    val publicId: String,
+    val url: String
 )

@@ -58,13 +58,13 @@ class DistributorFragment : Fragment() {
 
         token = SharedPrefUtils.getString(requireContext(), "token")
         token?.let {
-            CoroutineScope(Dispatchers.IO).launch {
-                val response = viewModel.getDistributors("Bearer $it")
+            CoroutineScope(Dispatchers.Main).launch {
+                val response = withContext(Dispatchers.IO) { viewModel.getDistributors("Bearer $token") }
                 if (response.isSuccessful) {
-                    response.body()?.let { distributors ->
-                        adapter.setData(distributors)
-                        originalDistributorList = distributors
-                    }
+                    val data = response.body()
+                    adapter.setData(data!!)
+                } else {
+                    Toast.makeText(context, "Failed to load data", Toast.LENGTH_SHORT).show()
                 }
             }
         }

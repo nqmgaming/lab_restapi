@@ -6,4 +6,16 @@
     android:icon="@drawable/distribution"
     />
 
+<item
+    android:id="@+id/fruitFragment"
+    android:title="Fruit"
+    android:icon="@drawable/fruit"
+    />
+
+<item
+    android:id="@+id/profileFragment"
+    android:title="Profile"
+    android:icon="@drawable/profile"
+    />
+
 </menu>

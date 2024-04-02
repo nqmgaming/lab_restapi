@@ -77,9 +77,18 @@ dependencies {
     implementation("pub.devrel:easypermissions:3.0.0")
     implementation("pub.devrel:easypermissions:2.0.1")
 
-    // Progress Dialog
-//    implementation("com.github.tommasoberlose:progress-dialog:1.0.0")
-
     // Avatar Image View
     implementation("xyz.schwaab:avvylib:1.2.0")
+
+    // Ted Permission
+    implementation("io.github.ParkSangGwon:tedpermission-coroutine:3.3.0")
+
+    // Image Picker
+    implementation ("com.github.dhaval2404:imagepicker:2.1")
+
+    // Glide
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+
+    // PickiT
+    implementation ("com.github.HBiSoft:PickiT:2.0.5")
 }

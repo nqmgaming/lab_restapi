@@ -9,5 +9,33 @@
         android:id="@+id/distributorFragment"
         android:name="com.nqmgaming.lab6_minhnqph31902.ui.fragment.distributor.DistributorFragment"
         android:label="Distributor"
-        tools:layout="@layout/fragment_distributor" />
+        tools:layout="@layout/fragment_distributor" >
+        <action
+            android:id="@+id/action_distributorFragment_to_fruitFragment"
+            app:destination="@id/fruitFragment" />
+        <action
+            android:id="@+id/action_distributorFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fruitFragment"
+        android:name="com.nqmgaming.lab6_minhnqph31902.ui.fragment.fruit.FruitFragment"
+        android:label="fragment_fruit"
+        tools:layout="@layout/fragment_fruit" >
+        <action
+            android:id="@+id/action_fruitFragment_to_distributorFragment"
+            app:destination="@id/distributorFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.nqmgaming.lab6_minhnqph31902.ui.fragment.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_distributorFragment"
+            app:destination="@id/distributorFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_fruitFragment"
+            app:destination="@id/fruitFragment" />
+    </fragment>
 </navigation>

@@ -66,8 +66,10 @@ class LoginActivity : AppCompatActivity() {
                         SharedPrefUtils.saveString(this@LoginActivity, "id", id.toString())
                         SharedPrefUtils.saveBoolean(this@LoginActivity, "isLoggedIn", true)
 
-                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-                        finish()
+                        Intent(this@LoginActivity, MainActivity::class.java).also {
+                            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(it)
+                        }
 
                     } else {
                         Toast.makeText(this@LoginActivity, "Login failed", Toast.LENGTH_SHORT).show()
