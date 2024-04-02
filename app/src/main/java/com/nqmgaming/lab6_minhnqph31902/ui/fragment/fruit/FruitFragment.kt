@@ -46,7 +46,7 @@ class FruitFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.fab.setOnClickListener{
+        binding.fab.setOnClickListener {
             findNavController().navigate((R.id.action_fruitFragment_to_addFruitFragment))
         }
 
@@ -86,7 +86,16 @@ class FruitFragment : Fragment() {
     }
 
     private fun showDialogToUpdateFruit(fruit: Fruit) {
-
+        val fruitId = fruit.id.toString()
+        val args = Bundle()
+        args.putString("fruitId", fruitId)
+        args.putString("fruitName", fruit.name)
+        args.putInt("fruitQuantity", fruit.quantity)
+        args.putDouble("fruitPrice", fruit.price)
+        args.putInt("fruitStatus", fruit.status)
+        args.putString("fruitDescription", fruit.description)
+        args.putString("fruitDistributor", fruit.distributor?.id)
+        findNavController().navigate(R.id.action_fruitFragment_to_editFruitFragment, args)
     }
 
     private fun deleteFruit(fruitId: String) {

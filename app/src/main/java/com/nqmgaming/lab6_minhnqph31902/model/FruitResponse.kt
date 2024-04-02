@@ -1,8 +1,9 @@
 package com.nqmgaming.lab6_minhnqph31902.model
 
+
 import com.google.gson.annotations.SerializedName
 
-data class Fruit(
+data class FruitResponse(
     @SerializedName("_id")
     val id: String,
     val name: String,
@@ -11,15 +12,7 @@ data class Fruit(
     val status: Int,
     val image: List<Images>,
     val description: String,
-    val distributor: Distributor?,
+    val distributor: String,
     val createdAt: String,
     val updatedAt: String
-)
-
-data class Images(
-    @SerializedName("_id")
-    val id: String,
-    @SerializedName("public_id")
-    val publicId: String,
-    val url: String
 )

@@ -11,7 +11,7 @@ import com.nqmgaming.lab6_minhnqph31902.databinding.ItemPhotoProductBinding
 
 class ImageFruitAdapter(
     private val context: Context,
-    private val listImage: MutableList<Uri>
+    private val listImage: MutableList<Uri>,
 ) : RecyclerView.Adapter<ImageFruitAdapter.ImageFruitViewHolder>() {
     inner class ImageFruitViewHolder(private val binding: ItemPhotoProductBinding) :
         RecyclerView.ViewHolder(binding.root) {

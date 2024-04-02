@@ -1,14 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EditFruitFragment">
+    tools:context=".ui.fragment.fruit.EditFruitFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-</FrameLayout>
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            app:navigationIcon="@drawable/ic_close"
+            app:title="Back" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="5dp"
+            app:cardCornerRadius="10dp">
+
+            <HorizontalScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/image_product_rv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:orientation="horizontal"
+                        android:visibility="visible"
+                        tools:listitem="@layout/item_photo_product" />
+
+                    <ImageView
+                        android:id="@+id/add_photo_iv"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/ic_add_photo"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/image_product_rv"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </LinearLayout>
+            </HorizontalScrollView>
+        </androidx.cardview.widget.CardView>
+
+        <EditText
+            android:id="@+id/name_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Name"
+            android:padding="10dp" />
+
+        <EditText
+            android:id="@+id/des_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Description"
+            android:padding="10dp" />
+
+        <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+            android:id="@+id/distributor_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
+            android:padding="5dp"
+            app:smsp_hint="Select Distributor"
+            app:smsp_hintColor="@color/black"
+            app:smsp_isSearchable="true"
+            app:smsp_searchHeaderBackgroundColor="@color/white"
+            app:smsp_searchHeaderText="Search"
+            app:smsp_searchHint="Search Distributor" />
+
+        <RadioGroup
+            android:id="@+id/radio_group_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/active_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Active" />
+
+            <RadioButton
+                android:id="@+id/inactive_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Inactive" />
+        </RadioGroup>
+
+        <EditText
+            android:id="@+id/price_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Price"
+            android:inputType="number"
+            android:padding="10dp" />
+
+        <EditText
+            android:id="@+id/quantity_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Quantity"
+            android:inputType="number"
+            android:padding="10dp" />
+
+        <Button
+            android:id="@+id/add_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Save" />
+
+
+    </LinearLayout>
+
+</ScrollView>

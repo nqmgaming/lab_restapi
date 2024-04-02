@@ -26,7 +26,7 @@ class FruitAdapter(
             binding.fruitPriceTv.text = "Price: ${fruit.price}"
             binding.fruitQuantityTv.text = "Quantity: ${fruit.quantity}"
             binding.fruitDescriptionTv.text = fruit.description
-            binding.fruitDistributorTv.text = "Distributor: ${fruit.distributor.name}"
+            binding.fruitDistributorTv.text = "Distributor: ${fruit.distributor?.name}"
             binding.statusTv.text = if (fruit.status == 1) "Active" else "Inactive"
 
             binding.textViewOptions.setOnClickListener {
@@ -40,6 +40,10 @@ class FruitAdapter(
                     true
                 }
                 popup.show()
+            }
+
+            binding.root.setOnClickListener{
+                onUpdate(fruit)
             }
 
         }

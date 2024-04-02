@@ -2,6 +2,7 @@ package com.nqmgaming.lab6_minhnqph31902.api
 
 import com.nqmgaming.lab6_minhnqph31902.model.Distributor
 import com.nqmgaming.lab6_minhnqph31902.model.Fruit
+import com.nqmgaming.lab6_minhnqph31902.model.FruitResponse
 import com.nqmgaming.lab6_minhnqph31902.model.User
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -45,6 +46,12 @@ interface ApiService {
     @GET("distributors")
     suspend fun getDistributors(@Header("Authorization") token: String): Response<List<Distributor>>
 
+    @GET("distributors/{distributorId}")
+    suspend fun getDistributor(
+        @Header("Authorization") token: String,
+        @Path("distributorId") distributorId: String
+    ): Response<Distributor>
+
     @DELETE("distributors/{distributorId}")
     suspend fun deleteDistributor(
         @Header("Authorization") token: String,
@@ -76,6 +83,12 @@ interface ApiService {
     @GET("fruits")
     suspend fun getFruits(@Header("Authorization") token: String): Response<List<Fruit>>
 
+    @GET("fruits/{fruitId}")
+    suspend fun getFruit(
+        @Header("Authorization") token: String,
+        @Path("fruitId") fruitId: String
+    ): Response<Fruit>
+
     @DELETE("fruits/{fruitId}")
     suspend fun deleteFruit(
         @Header("Authorization") token: String,
@@ -94,4 +107,18 @@ interface ApiService {
         @Part("distributor") distributor: RequestBody,
         @Part images: List<MultipartBody.Part>
     ): Response<Fruit>
+
+    @Multipart
+    @PATCH("fruits/{fruitId}")
+    suspend fun updateFruit(
+        @Header("Authorization") token: String,
+        @Path("fruitId") fruitId: String,
+        @Part("name") name: RequestBody,
+        @Part("quantity") quantity: RequestBody,
+        @Part("price") price: RequestBody,
+        @Part("status") status: RequestBody,
+        @Part("description") description: RequestBody,
+        @Part("distributor") distributor: RequestBody,
+        @Part images: List<MultipartBody.Part>
+    ): Response<FruitResponse>
 }
