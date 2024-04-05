@@ -4,6 +4,7 @@ import com.nqmgaming.lab6_minhnqph31902.model.Distributor
 import com.nqmgaming.lab6_minhnqph31902.model.DistrictResponse
 import com.nqmgaming.lab6_minhnqph31902.model.Fruit
 import com.nqmgaming.lab6_minhnqph31902.model.FruitResponse
+import com.nqmgaming.lab6_minhnqph31902.model.FruitResponseSort
 import com.nqmgaming.lab6_minhnqph31902.model.ProvinceResponse
 import com.nqmgaming.lab6_minhnqph31902.model.User
 import com.nqmgaming.lab6_minhnqph31902.model.WardResponse
@@ -85,6 +86,15 @@ interface ApiService {
     //get list of fruits
     @GET("fruits")
     suspend fun getFruits(@Header("Authorization") token: String): Response<List<Fruit>>
+
+    @GET("fruits/query")
+    suspend fun getFruitsQuery(
+        @Header("Authorization") token: String,
+        @Query("name") name: String?,
+        @Query("price") price: Int?,
+        @Query("page") page: Int?,
+        @Query("sort") sort: String?
+    ): Response<FruitResponseSort>
 
     @GET("fruits/{fruitId}")
     suspend fun getFruit(

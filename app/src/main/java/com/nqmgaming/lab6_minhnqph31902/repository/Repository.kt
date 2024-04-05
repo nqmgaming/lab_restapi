@@ -6,6 +6,7 @@ import com.nqmgaming.lab6_minhnqph31902.model.Distributor
 import com.nqmgaming.lab6_minhnqph31902.model.DistrictResponse
 import com.nqmgaming.lab6_minhnqph31902.model.Fruit
 import com.nqmgaming.lab6_minhnqph31902.model.FruitResponse
+import com.nqmgaming.lab6_minhnqph31902.model.FruitResponseSort
 import com.nqmgaming.lab6_minhnqph31902.model.ProvinceResponse
 import com.nqmgaming.lab6_minhnqph31902.model.User
 import com.nqmgaming.lab6_minhnqph31902.model.WardResponse
@@ -81,6 +82,16 @@ class Repository {
 
     suspend fun getFruits(token: String): Response<List<Fruit>> {
         return ApiServiceBuilder.api.getFruits(token)
+    }
+
+    suspend fun getFruitsQuery(
+        token: String,
+        name: String?,
+        price: Int?,
+        page: Int?,
+        sort: String?
+    ): Response<FruitResponseSort> {
+        return ApiServiceBuilder.api.getFruitsQuery(token, name, price, page, sort)
     }
 
     suspend fun getFruit(token: String, fruitId: String): Response<Fruit> {

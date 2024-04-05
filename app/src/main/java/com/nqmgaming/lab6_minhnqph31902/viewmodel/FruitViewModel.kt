@@ -9,6 +9,14 @@ class FruitViewModel(
 
     suspend fun getFruits(token: String) = repository.getFruits(token)
 
+    suspend fun getFruitsQuery(
+        token: String,
+        name: String?,
+        price: Int?,
+        page: Int?,
+        sort: String?
+    ) = repository.getFruitsQuery(token, name, price, page, sort)
+
     suspend fun deleteFruit(token: String, fruitId: String) = repository.deleteFruit(token, fruitId)
 
 }
