@@ -1,9 +1,12 @@
 package com.nqmgaming.lab6_minhnqph31902.api
 
 import com.nqmgaming.lab6_minhnqph31902.model.Distributor
+import com.nqmgaming.lab6_minhnqph31902.model.DistrictResponse
 import com.nqmgaming.lab6_minhnqph31902.model.Fruit
 import com.nqmgaming.lab6_minhnqph31902.model.FruitResponse
+import com.nqmgaming.lab6_minhnqph31902.model.ProvinceResponse
 import com.nqmgaming.lab6_minhnqph31902.model.User
+import com.nqmgaming.lab6_minhnqph31902.model.WardResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -121,4 +124,14 @@ interface ApiService {
         @Part("distributor") distributor: RequestBody,
         @Part images: List<MultipartBody.Part>
     ): Response<FruitResponse>
+
+
+    @GET("province")
+    suspend fun getProvinces(@Header("token") token: String): Response<ProvinceResponse>
+
+    @GET("district")
+    suspend fun getDistricts(@Header("Token") token: String, @Query("province_id") provinceId: Int): Response<DistrictResponse>
+
+    @GET("ward")
+    suspend fun getWards(@Header("Token") token: String, @Query("district_id") districtId: Int): Response<WardResponse>
 }

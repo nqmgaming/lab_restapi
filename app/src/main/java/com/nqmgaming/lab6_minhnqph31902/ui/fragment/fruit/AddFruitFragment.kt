@@ -165,6 +165,7 @@ class AddFruitFragment : Fragment() {
                 .compress(1024)
                 .maxResultSize(1080, 1080)
                 .galleryOnly()
+
                 .createIntent { intent ->
                     imagePicker.launch(intent)
                 }

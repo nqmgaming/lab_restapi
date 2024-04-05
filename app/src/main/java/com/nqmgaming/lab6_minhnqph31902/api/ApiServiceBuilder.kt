@@ -13,8 +13,19 @@ object ApiServiceBuilder {
             .build()
     }
 
+    private val retrofitGHN by lazy {
+        Retrofit.Builder()
+            .baseUrl(Constants.API_GHN)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
     val api:ApiService by lazy {
         retrofit.create(ApiService::class.java)
+    }
+
+    val apiGHN:ApiService by lazy {
+        retrofitGHN.create(ApiService::class.java)
     }
 
 }

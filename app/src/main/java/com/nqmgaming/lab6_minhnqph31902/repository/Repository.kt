@@ -3,12 +3,16 @@ package com.nqmgaming.lab6_minhnqph31902.repository
 import android.util.Log
 import com.nqmgaming.lab6_minhnqph31902.api.ApiServiceBuilder
 import com.nqmgaming.lab6_minhnqph31902.model.Distributor
+import com.nqmgaming.lab6_minhnqph31902.model.DistrictResponse
 import com.nqmgaming.lab6_minhnqph31902.model.Fruit
 import com.nqmgaming.lab6_minhnqph31902.model.FruitResponse
+import com.nqmgaming.lab6_minhnqph31902.model.ProvinceResponse
 import com.nqmgaming.lab6_minhnqph31902.model.User
-import okhttp3.MediaType
+import com.nqmgaming.lab6_minhnqph31902.model.WardResponse
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Response
 import java.io.File
 
@@ -25,16 +29,16 @@ class Repository {
         available: Boolean,
         avatarFile: File
     ): Response<User> {
-        val usernameRequestBody = RequestBody.create(MediaType.parse("text/plain"), username)
-        val passwordRequestBody = RequestBody.create(MediaType.parse("text/plain"), password)
-        val emailRequestBody = RequestBody.create(MediaType.parse("text/plain"), email)
-        val nameRequestBody = RequestBody.create(MediaType.parse("text/plain"), name)
+        val usernameRequestBody = username.toRequestBody("text/plain".toMediaTypeOrNull())
+        val passwordRequestBody = password.toRequestBody("text/plain".toMediaTypeOrNull())
+        val emailRequestBody = email.toRequestBody("text/plain".toMediaTypeOrNull())
+        val nameRequestBody = name.toRequestBody("text/plain".toMediaTypeOrNull())
         val availableRequestBody =
-            RequestBody.create(MediaType.parse("text/plain"), available.toString())
+            available.toString().toRequestBody("text/plain".toMediaTypeOrNull())
         val avatarPart = MultipartBody.Part.createFormData(
             "avatar",
             avatarFile.name,
-            RequestBody.create(MediaType.parse("image/*"), avatarFile)
+            avatarFile.asRequestBody("image/*".toMediaTypeOrNull())
         )
         Log.e("Uploaddddd", avatarFile.toString())
         return ApiServiceBuilder.api.register(
@@ -98,20 +102,20 @@ class Repository {
         distributorId: String,
         imageList: List<File>
     ): Response<Fruit> {
-        val nameRequestBody = RequestBody.create(MediaType.parse("text/plain"), name)
+        val nameRequestBody = name.toRequestBody("text/plain".toMediaTypeOrNull())
         val quantityRequestBody =
-            RequestBody.create(MediaType.parse("text/plain"), quantity.toString())
-        val priceRequestBody = RequestBody.create(MediaType.parse("text/plain"), price.toString())
-        val statusRequestBody = RequestBody.create(MediaType.parse("text/plain"), status.toString())
-        val descriptionRequestBody = RequestBody.create(MediaType.parse("text/plain"), description)
+            quantity.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+        val priceRequestBody = price.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+        val statusRequestBody = status.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+        val descriptionRequestBody = description.toRequestBody("text/plain".toMediaTypeOrNull())
         val distributorIdRequestBody =
-            RequestBody.create(MediaType.parse("text/plain"), distributorId)
+            distributorId.toRequestBody("text/plain".toMediaTypeOrNull())
         val imagePartList = mutableListOf<MultipartBody.Part>()
         imageList.forEach {
             val imagePart = MultipartBody.Part.createFormData(
                 "images",
                 it.name,
-                RequestBody.create(MediaType.parse("image/*"), it)
+                it.asRequestBody("image/*".toMediaTypeOrNull())
             )
             imagePartList.add(imagePart)
         }
@@ -139,20 +143,20 @@ class Repository {
         distributorId: String,
         imageList: List<File>
     ): Response<FruitResponse> {
-        val nameRequestBody = RequestBody.create(MediaType.parse("text/plain"), name)
+        val nameRequestBody = name.toRequestBody("text/plain".toMediaTypeOrNull())
         val quantityRequestBody =
-            RequestBody.create(MediaType.parse("text/plain"), quantity.toString())
-        val priceRequestBody = RequestBody.create(MediaType.parse("text/plain"), price.toString())
-        val statusRequestBody = RequestBody.create(MediaType.parse("text/plain"), status.toString())
-        val descriptionRequestBody = RequestBody.create(MediaType.parse("text/plain"), description)
+            quantity.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+        val priceRequestBody = price.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+        val statusRequestBody = status.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+        val descriptionRequestBody = description.toRequestBody("text/plain".toMediaTypeOrNull())
         val distributorIdRequestBody =
-            RequestBody.create(MediaType.parse("text/plain"), distributorId)
+            distributorId.toRequestBody("text/plain".toMediaTypeOrNull())
         val imagePartList = mutableListOf<MultipartBody.Part>()
         imageList.forEach {
             val imagePart = MultipartBody.Part.createFormData(
                 "images",
                 it.name,
-                RequestBody.create(MediaType.parse("image/*"), it)
+                it.asRequestBody("image/*".toMediaTypeOrNull())
             )
             imagePartList.add(imagePart)
         }
@@ -167,5 +171,17 @@ class Repository {
             distributorIdRequestBody,
             imagePartList
         )
+    }
+
+    suspend fun getProvinces(token: String): Response<ProvinceResponse> {
+        return ApiServiceBuilder.apiGHN.getProvinces(token)
+    }
+
+    suspend fun getDistricts(token: String, provinceId: Int): Response<DistrictResponse> {
+        return ApiServiceBuilder.apiGHN.getDistricts(token, provinceId)
+    }
+
+    suspend fun getWards(token: String, districtId: Int): Response<WardResponse> {
+        return ApiServiceBuilder.apiGHN.getWards(token, districtId)
     }
 }

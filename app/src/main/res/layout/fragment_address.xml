@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center|top"
+    android:orientation="vertical"
+    tools:context=".ui.fragment.address.AddressFragment">
+
+    <TextView
+        android:id="@+id/tv_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="Select Address"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="10dp"
+        android:elevation="5dp"
+        app:cardCornerRadius="10dp">
+
+        <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+            android:id="@+id/province_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
+            android:padding="5dp"
+            app:smsp_hint="Select Province"
+            app:smsp_hintColor="@color/black"
+            app:smsp_isSearchable="true"
+            app:smsp_searchHeaderBackgroundColor="@color/white"
+            app:smsp_searchHeaderText="Search"
+            app:smsp_searchHint="Search Distributor" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="10dp"
+        android:elevation="5dp"
+        app:cardCornerRadius="10dp">
+
+        <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+            android:id="@+id/district_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
+            android:padding="5dp"
+            app:smsp_hint="Select District"
+            app:smsp_hintColor="@color/black"
+            app:smsp_isSearchable="true"
+            app:smsp_searchHeaderBackgroundColor="@color/white"
+            app:smsp_searchHeaderText="Search"
+            app:smsp_searchHint="Search Distributor" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="10dp"
+        android:elevation="5dp"
+        app:cardCornerRadius="10dp">
+
+        <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+            android:id="@+id/ward_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
+            android:padding="5dp"
+            app:smsp_hint="Select Ward"
+            app:smsp_hintColor="@color/black"
+            app:smsp_isSearchable="true"
+            app:smsp_searchHeaderBackgroundColor="@color/white"
+            app:smsp_searchHeaderText="Search"
+            app:smsp_searchHint="Search Distributor" />
+    </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Cancel" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Save" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_address_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Address Result"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_address_result_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Address Result Detail"
+        android:textSize="16sp" />
+
+</LinearLayout>

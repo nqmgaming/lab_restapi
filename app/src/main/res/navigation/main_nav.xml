@@ -72,4 +72,13 @@
             app:destination="@id/profileFragment" />
 
     </fragment>
+    <fragment
+        android:id="@+id/addressFragment"
+        android:name="com.nqmgaming.lab6_minhnqph31902.ui.fragment.address.AddressFragment"
+        android:label="fragment_address"
+        tools:layout="@layout/fragment_address" >
+        <action
+            android:id="@+id/action_addressFragment_to_distributorFragment"
+            app:destination="@id/distributorFragment" />
+    </fragment>
 </navigation>

@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         }
         setupBottomNav()
     }
+
     private fun setupBottomNav() {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main)
 
@@ -34,10 +35,17 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(R.id.distributorFragment)
                     true
                 }
+
                 R.id.fruitFragment -> {
                     navController.navigate(R.id.fruitFragment)
                     true
                 }
+
+                R.id.addressFragment -> {
+                    navController.navigate(R.id.addressFragment)
+                    true
+                }
+
                 R.id.profileFragment -> {
                     navController.navigate(R.id.profileFragment)
                     true
