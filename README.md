@@ -16,7 +16,7 @@ libraries and frameworks such as Retrofit, Glide, and Android Jetpack components
 
 1. Clone the repository:
     ```sh
-    git clone <repository-url>
+    git clone https://github.com/nqmgaming/lab_restapi.git
     ```
 2. Open the project in Android Studio.
 3. Build the project to download all dependencies.
