@@ -3,12 +3,14 @@ package com.nqmgaming.lab6_minhnqph31902.ui.activity
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -17,14 +19,12 @@ import com.gun0912.tedpermission.coroutine.TedPermission
 import com.nqmgaming.lab6_minhnqph31902.MainActivity
 import com.nqmgaming.lab6_minhnqph31902.databinding.ActivityRegisterBinding
 import com.nqmgaming.lab6_minhnqph31902.repository.Repository
-import com.nqmgaming.lab6_minhnqph31902.utils.ImageUtils
 import com.nqmgaming.lab6_minhnqph31902.utils.RealPathUtil
 import com.nqmgaming.lab6_minhnqph31902.utils.SharedPrefUtils
 import com.nqmgaming.lab6_minhnqph31902.viewmodel.RegisterViewModel
 import com.nqmgaming.lab6_minhnqph31902.viewmodel.RegisterViewModelFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -34,6 +34,7 @@ class RegisterActivity : AppCompatActivity() {
     private var imageUri: Uri? = null
     private lateinit var viewModel: RegisterViewModel
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -44,7 +45,7 @@ class RegisterActivity : AppCompatActivity() {
             finish()
         }
         binding.imageView.setOnClickListener {
-            GlobalScope.launch {
+            CoroutineScope(Dispatchers.Main).launch {
                 checkPermissionAndOpenCameraOrGallery()
             }
         }
@@ -58,6 +59,7 @@ class RegisterActivity : AppCompatActivity() {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private suspend fun checkPermissionAndOpenCameraOrGallery() {
         val permissionsResult = TedPermission.create()
             .setPermissions(

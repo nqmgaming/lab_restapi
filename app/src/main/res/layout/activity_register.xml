@@ -7,10 +7,23 @@
     android:layout_height="match_parent"
     tools:context=".ui.activity.RegisterActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/txt_register"
+        app:titleTextColor="@android:color/white" />
+
     <xyz.schwaab.avvylib.AvatarView
         android:id="@+id/imageView"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/avt"
         app:avvy_border_color="#000000"
         app:avvy_border_highlight_color="#ff5900"
         app:avvy_border_highlight_color_end="#bf15bc"
@@ -18,13 +31,12 @@
         app:avvy_border_thickness_highlight="3dp"
         app:avvy_distance_to_border="5dp"
         app:avvy_highlighted="true"
-        app:avvy_show_badge="true"
-        android:src="@drawable/avt"
         app:avvy_loading_arches="5"
         app:avvy_loading_arches_degree_area="90"
+        app:avvy_show_badge="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -42,7 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Register"
+        android:text="@string/txt_register"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,7 +68,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/search_view_bg"
-        android:hint="Enter Username"
+        android:hint="@string/txt_enter_username"
         android:inputType="text"
         android:padding="10dp"
         android:textColor="#000000"
@@ -74,7 +86,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/search_view_bg"
-        android:hint="Enter Email"
+        android:hint="@string/txt_enter_email"
         android:inputType="textEmailAddress"
         android:padding="10dp"
         android:textColor="#000000"
@@ -92,7 +104,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/search_view_bg"
-        android:hint="Enter Password"
+        android:hint="@string/txt_enter_password"
         android:inputType="textPassword"
         android:padding="10dp"
         android:textColor="#000000"
@@ -102,7 +114,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/email_et" />
 
-<!--    name-->
+    <!--    name-->
 
     <EditText
         android:id="@+id/name_et"
@@ -112,7 +124,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/search_view_bg"
-        android:hint="Enter Name"
+        android:hint="@string/txt_enter_name"
         android:inputType="text"
         android:padding="10dp"
         android:textColor="#000000"
@@ -124,43 +136,43 @@
 
     <Button
         android:id="@+id/register_btn"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/button_bg"
-        android:text="Register"
+        android:text="@string/txt_register"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/name_et" />
 
-    <Button
-        android:id="@+id/login_btn"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/button_bg"
-        android:text="Login"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/register_btn" />
-
     <TextView
         android:id="@+id/login_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Already have an account?"
+        android:text="@string/txt_already_have_an_account"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login_btn" />
+        app:layout_constraintTop_toBottomOf="@id/register_btn" />
+
+    <Button
+        android:id="@+id/login_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/button_bg"
+        android:text="@string/txt_login"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_tv" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

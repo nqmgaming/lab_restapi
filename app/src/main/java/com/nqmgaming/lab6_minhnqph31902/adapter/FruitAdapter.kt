@@ -30,7 +30,10 @@ class FruitAdapter(
             binding.statusTv.text = if (fruit.status == 1) "Active" else "Inactive"
 
             binding.textViewOptions.setOnClickListener {
-                val popup = android.widget.PopupMenu(binding.textViewOptions.context, binding.textViewOptions)
+                val popup = android.widget.PopupMenu(
+                    binding.textViewOptions.context,
+                    binding.textViewOptions
+                )
                 popup.inflate(com.nqmgaming.lab6_minhnqph31902.R.menu.menu_item_fruit)
                 popup.setOnMenuItemClickListener {
                     when (it.itemId) {
@@ -42,7 +45,7 @@ class FruitAdapter(
                 popup.show()
             }
 
-            binding.root.setOnClickListener{
+            binding.root.setOnClickListener {
                 onUpdate(fruit)
             }
 

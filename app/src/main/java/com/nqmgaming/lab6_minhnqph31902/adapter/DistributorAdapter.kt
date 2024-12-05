@@ -13,22 +13,25 @@ import com.nqmgaming.lab6_minhnqph31902.model.Distributor
 class DistributorAdapter(
     private var onDelete: (Distributor) -> Unit,
     private val onUpdate: (Distributor) -> Unit
-): RecyclerView.Adapter<DistributorAdapter.DistributorViewHolder>() {
+) : RecyclerView.Adapter<DistributorAdapter.DistributorViewHolder>() {
 
     private var distributorList = emptyList<Distributor>()
-   inner class DistributorViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-       fun onBind(distributor: Distributor){
-           itemView.findViewById<TextView>(R.id.name_tv).text = distributor.name.toString()
-           itemView.findViewById<ImageButton>(R.id.delete_btn).setOnClickListener {
-               onDelete(distributor)
-           }
 
-       }
+    inner class DistributorViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun onBind(distributor: Distributor) {
+            itemView.findViewById<TextView>(R.id.name_tv).text = distributor.name.toString()
+            itemView.findViewById<ImageButton>(R.id.delete_btn).setOnClickListener {
+                onDelete(distributor)
+            }
+
+        }
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DistributorViewHolder {
-       return DistributorViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_distributor, parent, false))
+        return DistributorViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.item_distributor, parent, false)
+        )
     }
 
     override fun getItemCount(): Int {
@@ -43,7 +46,7 @@ class DistributorAdapter(
         }
     }
 
-    fun setData(distributor: List<Distributor>){
+    fun setData(distributor: List<Distributor>) {
         this.distributorList = distributor
         notifyDataSetChanged()
     }

@@ -2,15 +2,13 @@ package com.nqmgaming.lab6_minhnqph31902.ui.fragment.distributor
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nqmgaming.lab6_minhnqph31902.R
@@ -33,7 +31,7 @@ class DistributorFragment : Fragment() {
     private lateinit var viewModel: DistributorViewModel
     private val adapter by lazy {
         DistributorAdapter(
-            onDelete = { distributor -> deleteDistributor(distributor.id.toString()) },
+            onDelete = { distributor -> deleteDistributor(distributor.id) },
             onUpdate = { distributor -> showDialogToUpdateDistributor(distributor) })
     }
     private var originalDistributorList = emptyList<Distributor>()
@@ -42,7 +40,7 @@ class DistributorFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentDistributorBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -146,7 +144,7 @@ class DistributorFragment : Fragment() {
                 CoroutineScope(Dispatchers.IO).launch {
                     val response = viewModel.updateDistributor(
                         "Bearer $token",
-                        distributor.id.toString(),
+                        distributor.id,
                         name
                     )
                     if (response.isSuccessful) {

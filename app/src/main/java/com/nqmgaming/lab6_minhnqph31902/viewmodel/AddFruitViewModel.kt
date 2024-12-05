@@ -18,7 +18,16 @@ class AddFruitViewModel(private val repository: Repository) : ViewModel() {
         distributorId: String,
         imageFiles: List<File>
     ): Response<Fruit> {
-        return repository.addFruit(token, name, quantity, price, status, description, distributorId, imageFiles)
+        return repository.addFruit(
+            token,
+            name,
+            quantity,
+            price,
+            status,
+            description,
+            distributorId,
+            imageFiles
+        )
     }
 
 }

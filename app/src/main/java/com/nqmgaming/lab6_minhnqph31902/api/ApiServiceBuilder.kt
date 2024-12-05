@@ -20,11 +20,11 @@ object ApiServiceBuilder {
             .build()
     }
 
-    val api:ApiService by lazy {
+    val api: ApiService by lazy {
         retrofit.create(ApiService::class.java)
     }
 
-    val apiGHN:ApiService by lazy {
+    val apiGHN: ApiService by lazy {
         retrofitGHN.create(ApiService::class.java)
     }
 

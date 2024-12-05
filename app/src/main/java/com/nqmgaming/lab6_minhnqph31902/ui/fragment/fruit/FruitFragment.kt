@@ -47,7 +47,7 @@ class FruitFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentFruitBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -173,7 +173,8 @@ class FruitFragment : Fragment() {
                                 updatedFruitList.addAll(fruitResponse.fruits)
                                 originalFruitList = updatedFruitList
                                 adapter.setFruitList(updatedFruitList)
-                                binding.tvCount.text = "Total: ${fruitResponse.page} fruits"
+                                binding.tvCount.text =
+                                    getString(R.string.txt_total_fruits, fruitResponse.page)
 
                                 //if the current page is the last page, then disable the scroll listener
                                 if (fruitResponse.page == fruitResponse.pages) {
@@ -200,7 +201,7 @@ class FruitFragment : Fragment() {
     }
 
     private fun showDialogToUpdateFruit(fruit: Fruit) {
-        val fruitId = fruit.id.toString()
+        val fruitId = fruit.id
         val args = Bundle()
         args.putString("fruitId", fruitId)
         args.putString("fruitName", fruit.name)
@@ -217,7 +218,7 @@ class FruitFragment : Fragment() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Delete Fruit")
         builder.setMessage("Are you sure you want to delete this fruit?")
-        builder.setPositiveButton("Yes") { dialog, which ->
+        builder.setPositiveButton("Yes") { _, _ ->
             token?.let {
                 CoroutineScope(Dispatchers.IO).launch {
                     try {
@@ -225,7 +226,7 @@ class FruitFragment : Fragment() {
                         withContext(Dispatchers.Main) {
                             if (response.isSuccessful) {
                                 val updatedFruitList = originalFruitList.toMutableList()
-                                updatedFruitList.removeIf { it.id.toString() == fruitId }
+                                updatedFruitList.removeIf { it.id == fruitId }
                                 adapter.setFruitList(updatedFruitList)
                             } else {
                                 Log.d("FruitFragment", "deleteFruit: ${response.message()}")
@@ -238,7 +239,7 @@ class FruitFragment : Fragment() {
             }
         }
 
-        builder.setNegativeButton("No") { dialog, which -> }
+        builder.setNegativeButton("No") { _, _ -> }
         builder.create().show()
     }
 

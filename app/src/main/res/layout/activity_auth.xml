@@ -8,25 +8,23 @@
     tools:context=".ui.activity.AuthActivity">
 
     <Button
-        android:id="@+id/login_btn"
+        android:id="@+id/register_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/login"
         android:layout_marginHorizontal="50dp"
+        android:text="@string/Register"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/register_btn"
+        android:id="@+id/login_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/Register"
         android:layout_marginHorizontal="50dp"
-        app:layout_constraintBottom_toTopOf="@+id/login_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="@string/login"
+        app:layout_constraintTop_toBottomOf="@id/register_btn" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

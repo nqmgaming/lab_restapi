@@ -21,7 +21,7 @@ data class DistrictData(
     val type: Int,
     @SerializedName("SupportType")
     val supportType: Int
-){
+) {
     override fun toString(): String {
         return districtName
     }

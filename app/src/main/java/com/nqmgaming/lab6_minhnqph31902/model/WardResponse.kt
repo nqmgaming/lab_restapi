@@ -15,7 +15,7 @@ data class WardData(
     val districtID: Int,
     @SerializedName("WardName")
     val wardName: String
-){
+) {
     override fun toString(): String {
         return wardName
     }

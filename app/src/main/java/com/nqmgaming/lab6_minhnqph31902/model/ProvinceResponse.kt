@@ -15,7 +15,7 @@ data class ProvinceData(
     val provinceName: String,
     @SerializedName("Code")
     val code: String
-){
+) {
     override fun toString(): String {
         return provinceName
     }

@@ -6,7 +6,13 @@ import java.io.File
 
 class RegisterViewModel(
     private val repository: Repository
-):ViewModel() {
-    suspend fun register(username: String, password: String, email: String, name: String, available: Boolean, avatarFile: File)
-    = repository.register(username, password, email, name, available, avatarFile)
+) : ViewModel() {
+    suspend fun register(
+        username: String,
+        password: String,
+        email: String,
+        name: String,
+        available: Boolean,
+        avatarFile: File
+    ) = repository.register(username, password, email, name, available, avatarFile)
 }

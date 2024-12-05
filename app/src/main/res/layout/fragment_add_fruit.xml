@@ -8,11 +8,9 @@
     android:orientation="vertical"
     tools:context=".ui.fragment.fruit.AddFruitFragment">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         tools:context=".ui.fragment.fruit.AddFruitFragment">
@@ -27,11 +25,13 @@
             android:gravity="center_vertical"
             android:padding="10dp"
             app:navigationIcon="@drawable/ic_close"
-            app:title="Back" />
+            app:title="Back"
+            app:titleTextColor="@android:color/white" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
             android:elevation="5dp"
             app:cardCornerRadius="10dp">
 
@@ -70,14 +70,16 @@
             android:id="@+id/name_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Name"
+            android:layout_marginHorizontal="10dp"
+            android:hint="@string/txt_name"
             android:padding="10dp" />
 
         <EditText
             android:id="@+id/des_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Description"
+            android:layout_marginHorizontal="10dp"
+            android:hint="@string/txt_description"
             android:padding="10dp" />
 
         <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
@@ -98,6 +100,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_marginHorizontal="10dp"
             android:orientation="horizontal">
 
             <RadioButton
@@ -105,21 +108,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="Active" />
+                android:text="@string/txt_active" />
 
             <RadioButton
                 android:id="@+id/inactive_rb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="Inactive" />
+                android:text="@string/txt_inactive" />
         </RadioGroup>
 
         <EditText
             android:id="@+id/price_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Price"
+            android:layout_marginHorizontal="10dp"
+            android:hint="@string/txt_price"
             android:inputType="number"
             android:padding="10dp" />
 
@@ -127,7 +131,8 @@
             android:id="@+id/quantity_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Quantity"
+            android:layout_marginHorizontal="10dp"
+            android:hint="@string/txt_quantity"
             android:inputType="number"
             android:padding="10dp" />
 
@@ -135,9 +140,9 @@
             android:id="@+id/add_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
             android:padding="10dp"
-            android:text="Add" />
-
+            android:text="@string/txt_add" />
 
     </LinearLayout>
 </ScrollView>

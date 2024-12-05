@@ -1,6 +1,5 @@
 package com.nqmgaming.lab6_minhnqph31902.repository
 
-import android.util.Log
 import com.nqmgaming.lab6_minhnqph31902.api.ApiServiceBuilder
 import com.nqmgaming.lab6_minhnqph31902.model.Distributor
 import com.nqmgaming.lab6_minhnqph31902.model.DistrictResponse
@@ -21,7 +20,6 @@ class Repository {
     suspend fun login(username: String, password: String): Response<User> {
         return ApiServiceBuilder.api.login(username, password)
     }
-
     suspend fun register(
         username: String,
         password: String,
@@ -41,7 +39,6 @@ class Repository {
             avatarFile.name,
             avatarFile.asRequestBody("image/*".toMediaTypeOrNull())
         )
-        Log.e("Uploaddddd", avatarFile.toString())
         return ApiServiceBuilder.api.register(
             usernameRequestBody,
             passwordRequestBody,

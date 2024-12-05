@@ -4,16 +4,15 @@ import android.app.Activity
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.nqmgaming.lab6_minhnqph31902.R
@@ -42,14 +41,13 @@ class EditFruitFragment : Fragment() {
     private var token: String? = null
     private lateinit var viewModel: DistributorViewModel
     private var distributor: Distributor? = null
-    private var listImage = mutableListOf<Uri>()
     private lateinit var imageAdapter: ImageFruitAdapter
     private var fruit: Fruit? = null
     private lateinit var uriList: MutableList<Uri>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentEditFruitBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -175,7 +173,7 @@ class EditFruitFragment : Fragment() {
                     imagePicker.launch(intent)
                 }
         }
-        var status: Int = 0
+        var status = 0
         binding.radioGroupStatus.setOnCheckedChangeListener { _, checkedId ->
             status = when (checkedId) {
                 R.id.active_rb -> 1
@@ -189,23 +187,21 @@ class EditFruitFragment : Fragment() {
             val description = binding.desEt.text.toString().trim()
             val price = binding.priceEt.text.toString().trim().toDouble()
             val quantity = binding.quantityEt.text.toString().trim().toInt()
-            val distributorId = distributor?.id
+            val distributor = distributor?.id
             if (name.isEmpty() || description.isEmpty() || price.toString()
                     .isEmpty() || quantity.toString()
-                    .isEmpty() || distributorId.isNullOrEmpty()
+                    .isEmpty() || distributor.isNullOrEmpty()
             ) {
                 Toast.makeText(requireContext(), "Please fill all fields", Toast.LENGTH_SHORT)
                     .show()
                 return@setOnClickListener
             }
 
-            val imageList = mutableListOf<Uri>()
-
             val fileList = mutableListOf<File>()
 
-            uriList.forEach {
-                if (it.scheme == "file") {
-                    val realPath = RealPathUtil.getRealPath(requireContext(), it)
+            uriList.forEach { uri ->
+                if (uri.scheme == "file") {
+                    val realPath = RealPathUtil.getRealPath(requireContext(), uri)
                     val file = realPath?.let { it1 -> File(it1) }
                     file?.let { fileList.add(it) }
                 }
@@ -220,7 +216,7 @@ class EditFruitFragment : Fragment() {
                     price,
                     status,
                     description,
-                    distributorId,
+                    distributor,
                     fileList
                 )
 
@@ -248,19 +244,25 @@ class EditFruitFragment : Fragment() {
 
     private val imagePicker =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val fileUri = result.data?.data
-                Log.d("AddFruitFragment", "imagePicker: $fileUri")
-                uriList.add(fileUri!!)
-                imageAdapter.notifyDataSetChanged()
-            } else if (result.resultCode == ImagePicker.RESULT_ERROR) {
-                Toast.makeText(
-                    requireContext(),
-                    ImagePicker.getError(result.data),
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else {
-                Toast.makeText(requireContext(), "Task Cancelled", Toast.LENGTH_SHORT).show()
+            when (result.resultCode) {
+                Activity.RESULT_OK -> {
+                    val fileUri = result.data?.data
+                    Log.d("AddFruitFragment", "imagePicker: $fileUri")
+                    uriList.add(fileUri!!)
+                    imageAdapter.notifyDataSetChanged()
+                }
+
+                ImagePicker.RESULT_ERROR -> {
+                    Toast.makeText(
+                        requireContext(),
+                        ImagePicker.getError(result.data),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                else -> {
+                    Toast.makeText(requireContext(), "Task Cancelled", Toast.LENGTH_SHORT).show()
+                }
             }
         }
 }

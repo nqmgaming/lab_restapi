@@ -20,7 +20,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Apple"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/fruit_iv"
@@ -31,7 +30,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="Distributor: NQM"
         android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@id/fruit_iv"
         app:layout_constraintTop_toBottomOf="@id/fruit_name_tv" />
@@ -45,7 +43,6 @@
         android:layout_marginEnd="8dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="An apple is an edible fruit produced by an apple tree."
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/fruit_iv"
@@ -66,17 +63,14 @@
             android:id="@+id/fruit_quantity_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Quantity: "
             android:layout_weight="1"
             android:textSize="14sp" />
-
 
 
         <TextView
             android:id="@+id/fruit_price_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Price: "
             android:layout_weight="1"
             android:textSize="14sp" />
 
@@ -88,7 +82,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="Status: Available"
         android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@id/fruit_iv"
         app:layout_constraintTop_toBottomOf="@id/fruit_price_ll" />

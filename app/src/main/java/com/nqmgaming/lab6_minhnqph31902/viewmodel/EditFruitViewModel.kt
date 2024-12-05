@@ -16,18 +16,17 @@ class EditFruitViewModel(private val repository: Repository) : ViewModel() {
         description: String,
         distributor: String,
         imageList: List<File>
-    ) =
-        repository.updateFruit(
-            token,
-            fruitId,
-            name,
-            quantity,
-            price,
-            status,
-            description,
-            distributor,
-            imageList
-        )
+    ) = repository.updateFruit(
+        token,
+        fruitId,
+        name,
+        quantity,
+        price,
+        status,
+        description,
+        distributor,
+        imageList
+    )
 
     //get fruit
     suspend fun getFruit(token: String, fruitId: String) = repository.getFruit(token, fruitId)

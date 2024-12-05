@@ -140,8 +140,14 @@ interface ApiService {
     suspend fun getProvinces(@Header("token") token: String): Response<ProvinceResponse>
 
     @GET("district")
-    suspend fun getDistricts(@Header("Token") token: String, @Query("province_id") provinceId: Int): Response<DistrictResponse>
+    suspend fun getDistricts(
+        @Header("Token") token: String,
+        @Query("province_id") provinceId: Int
+    ): Response<DistrictResponse>
 
     @GET("ward")
-    suspend fun getWards(@Header("Token") token: String, @Query("district_id") districtId: Int): Response<WardResponse>
+    suspend fun getWards(
+        @Header("Token") token: String,
+        @Query("district_id") districtId: Int
+    ): Response<WardResponse>
 }

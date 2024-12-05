@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.nqmgaming.lab6_minhnqph31902.R
 import com.nqmgaming.lab6_minhnqph31902.databinding.FragmentAddressBinding
-import com.nqmgaming.lab6_minhnqph31902.model.Distributor
 import com.nqmgaming.lab6_minhnqph31902.model.DistrictData
 import com.nqmgaming.lab6_minhnqph31902.model.ProvinceData
 import com.nqmgaming.lab6_minhnqph31902.model.WardData
@@ -49,9 +48,9 @@ class AddressFragment : Fragment() {
         val viewModel = ViewModelProvider(this, viewModelFactory)[AddressViewModel::class.java]
 
         binding.districtSpinner.isEnabled = false
-        binding.districtSpinner.errorText = "Hãy chọn province trước"
+        binding.districtSpinner.errorText = getString(R.string.txt_please_choose_province_first)
         binding.wardSpinner.isEnabled = false
-        binding.wardSpinner.errorText = "Hãy chọn district trước"
+        binding.wardSpinner.errorText = getString(R.string.txt_please_choose_district_first)
 
 
         CoroutineScope(Dispatchers.IO).launch {
@@ -75,9 +74,9 @@ class AddressFragment : Fragment() {
                                     adapterView?.getItemAtPosition(position) as ProvinceData
                                 provinceId = province.provinceID
                                 CoroutineScope(Dispatchers.IO).launch {
-                                    val response = viewModel.getDistricts(token, provinceId)
-                                    if (response.isSuccessful) {
-                                        val districts = response.body()?.data
+                                    val districtResponseResponse = viewModel.getDistricts(token, provinceId)
+                                    if (districtResponseResponse.isSuccessful) {
+                                        val districts = districtResponseResponse.body()?.data
                                         CoroutineScope(Dispatchers.Main).launch {
                                             binding.districtSpinner.item = districts
                                             binding.districtSpinner.isEnabled = true
@@ -94,12 +93,12 @@ class AddressFragment : Fragment() {
                                                             adapterView?.getItemAtPosition(position) as DistrictData
                                                         districtId = district.districtID
                                                         CoroutineScope(Dispatchers.IO).launch {
-                                                            val response = viewModel.getWards(
+                                                            val wardResponseResponse = viewModel.getWards(
                                                                 token,
                                                                 districtId
                                                             )
-                                                            if (response.isSuccessful) {
-                                                                val wards = response.body()?.data
+                                                            if (wardResponseResponse.isSuccessful) {
+                                                                val wards = wardResponseResponse.body()?.data
                                                                 CoroutineScope(Dispatchers.Main).launch {
                                                                     binding.wardSpinner.item = wards
                                                                     binding.wardSpinner.isEnabled = true
@@ -130,7 +129,7 @@ class AddressFragment : Fragment() {
                                                             } else {
                                                                 Log.d(
                                                                     "AddressFragment",
-                                                                    "onViewCreated: ${response.code()}"
+                                                                    "onViewCreated: ${wardResponseResponse.code()}"
                                                                 )
                                                             }
                                                         }
@@ -142,7 +141,7 @@ class AddressFragment : Fragment() {
                                     } else {
                                         Log.d(
                                             "AddressFragment",
-                                            "onViewCreated: ${response.code()}"
+                                            "onViewCreated: ${districtResponseResponse.code()}"
                                         )
                                     }
                                 }
@@ -165,7 +164,8 @@ class AddressFragment : Fragment() {
                 val addressDetail = "${province.provinceName}, ${district.districtName}, ${ward.wardName}"
                 binding.tvAddressResultDetail.text = addressDetail
             } else {
-               Toast.makeText(context, "Chưa chọn đủ thông tin", Toast.LENGTH_SHORT).show()
+               Toast.makeText(context,
+                   getString(R.string.txt_not_enough_info_yet), Toast.LENGTH_SHORT).show()
             }
         }
     }

@@ -8,7 +8,7 @@ data class Distributor(
     val name: String,
     val createdAt: String,
     val updatedAt: String
-){
+) {
     override fun toString(): String {
         return name
     }

@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:text="Select Address"
+        android:text="@string/txt_select_address"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -53,12 +53,12 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="5dp"
             android:padding="5dp"
-            app:smsp_hint="Select District"
+            app:smsp_hint="@string/txt_select_district"
             app:smsp_hintColor="@color/black"
             app:smsp_isSearchable="true"
             app:smsp_searchHeaderBackgroundColor="@color/white"
             app:smsp_searchHeaderText="Search"
-            app:smsp_searchHint="Search Distributor" />
+            app:smsp_searchHint="@string/txt_search_distributor" />
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
@@ -75,12 +75,12 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="5dp"
             android:padding="5dp"
-            app:smsp_hint="Select Ward"
+            app:smsp_hint="@string/txt_select_ward"
             app:smsp_hintColor="@color/black"
             app:smsp_isSearchable="true"
             app:smsp_searchHeaderBackgroundColor="@color/white"
-            app:smsp_searchHeaderText="Search"
-            app:smsp_searchHint="Search Distributor" />
+            app:smsp_searchHeaderText="@string/txt_search"
+            app:smsp_searchHint="@string/txt_search_distributor" />
     </androidx.cardview.widget.CardView>
 
     <LinearLayout
@@ -99,7 +99,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Cancel" />
+            android:text="@string/txt_cancel" />
 
         <View
             android:layout_width="0dp"
@@ -111,7 +111,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Save" />
+            android:text="@string/txt_save" />
 
         <View
             android:layout_width="0dp"
@@ -124,7 +124,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Address Result"
+        android:text="@string/txt_address_result"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -132,7 +132,7 @@
         android:id="@+id/tv_address_result_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Address Result Detail"
+        android:text="@string/txt_address_result_detail"
         android:textSize="16sp" />
 
 </LinearLayout>

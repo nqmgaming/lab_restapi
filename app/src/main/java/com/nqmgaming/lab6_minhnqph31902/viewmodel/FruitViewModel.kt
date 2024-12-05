@@ -5,7 +5,7 @@ import com.nqmgaming.lab6_minhnqph31902.repository.Repository
 
 class FruitViewModel(
     private val repository: Repository
-):ViewModel() {
+) : ViewModel() {
 
     suspend fun getFruits(token: String) = repository.getFruits(token)
 

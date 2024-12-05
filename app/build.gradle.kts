@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace = "com.nqmgaming.lab6_minhnqph31902"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.nqmgaming.lab6_minhnqph31902"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -54,35 +54,31 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     // Retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.11.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
-    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.0")
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.logging.interceptor)
 
     // Gson
-    implementation("com.google.code.gson:gson:2.10.1")
-
-    // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9")
+    implementation(libs.gson)
 
     // Lifecycle
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
 
     // Navigation
-    implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
-    implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
 
     // Avatar Image View
-    implementation("xyz.schwaab:avvylib:1.2.0")
+    implementation(libs.avvylib)
 
     // Ted Permission
-    implementation("io.github.ParkSangGwon:tedpermission-coroutine:3.3.0")
+    implementation(libs.tedpermission.coroutine)
 
     // Image Picker
-    implementation ("com.github.dhaval2404:imagepicker:2.1")
+    implementation(libs.imagepicker)
 
     // Glide
-    implementation ("com.github.bumptech.glide:glide:4.16.0")
+    implementation(libs.glide)
     // Spinner
-    implementation ("com.github.chivorns:smartmaterialspinner:2.0.0")
+    implementation(libs.smartmaterialspinner)
 }

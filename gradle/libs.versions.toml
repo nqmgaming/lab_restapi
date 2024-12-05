@@ -1,25 +1,24 @@
 [versions]
-agp = "8.5.0-alpha03"
+agp = "8.5.2"
 avvylib = "1.2.0"
-easypermissions = "3.0.0"
-easypermissionsVersion = "2.0.1"
 glide = "4.16.0"
 gson = "2.10.1"
+imagepicker = "2.1"
 kotlin = "1.9.0"
-coreKtx = "1.12.0"
+coreKtx = "1.15.0"
 junit = "4.13.2"
-junitVersion = "1.1.5"
-espressoCore = "3.5.1"
-appcompat = "1.6.1"
-kotlinxCoroutinesAndroid = "1.7.3"
-kotlinxCoroutinesCore = "1.8.1-Beta"
-lifecycleViewmodelKtx = "2.7.0"
-material = "1.11.0"
-activity = "1.8.2"
-constraintlayout = "2.1.4"
-navigationUiKtx = "2.7.7"
-progressDialog = "1.0.0"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
+appcompat = "1.7.0"
+lifecycleViewmodelKtx = "2.8.7"
+loggingInterceptor = "4.12.0"
+material = "1.12.0"
+activity = "1.9.3"
+constraintlayout = "2.2.0"
+navigationUiKtx = "2.8.4"
 retrofit = "2.11.0"
+smartmaterialspinner = "2.0.0"
+tedpermissionCoroutine = "3.3.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -28,21 +27,20 @@ androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fr
 androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationUiKtx" }
 avvylib = { module = "xyz.schwaab:avvylib", version.ref = "avvylib" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
-easypermissions = { module = "pub.devrel:easypermissions", version.ref = "easypermissions" }
-easypermissions-v201 = { module = "pub.devrel:easypermissions", version.ref = "easypermissionsVersion" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+imagepicker = { module = "com.github.dhaval2404:imagepicker", version.ref = "imagepicker" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
-kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
+logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "loggingInterceptor" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
-progress-dialog = { module = "com.github.tommasoberlose:progress-dialog", version.ref = "progressDialog" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+smartmaterialspinner = { module = "com.github.chivorns:smartmaterialspinner", version.ref = "smartmaterialspinner" }
+tedpermission-coroutine = { module = "io.github.ParkSangGwon:tedpermission-coroutine", version.ref = "tedpermissionCoroutine" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
